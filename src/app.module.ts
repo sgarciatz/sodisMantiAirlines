@@ -1,22 +1,26 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { FlightController } from './flight.controller';
+import { FlightService } from './flight.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Flight } from './flight.entity';
+import { DataSource } from 'typeorm';
+import { DLMService } from './dlm.service';
 
 @Module({
   imports: [
-    // TypeOrmModule.forRoot({
-    //   type: 'mongodb',
-    //   host: 'localhost',
-    //   port: 3306,
-    //   username: 'root',
-    //   password: 'root',
-    //   database: 'test',
-    //   entities: [],
-    //   synchronize: true,
-    // }),
+    TypeOrmModule.forRoot({
+      "type": "mongodb",
+      "url": "mongodb://localhost:27017",
+      "database": "manti",
+      "entities": [Flight],
+    }),
+    TypeOrmModule.forFeature([Flight])
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [FlightController],
+  providers: [FlightService, DLMService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) { 
+  }
+
+}

@@ -1,11 +1,9 @@
-import { Entity, ObjectIdColumn, Column } from 'typeorm';
-import { FlightSeats } from './seat.entity';
-import { ObjectId } from 'mongodb';
+import { Entity, ObjectIdColumn, Column, ObjectId } from 'typeorm';
 
-@Entity()
+@Entity({database: 'manti', name: 'Flights'})
 export class Flight {
   @ObjectIdColumn()
-  id: ObjectId;
+  _id: ObjectId;
 
   @Column()
   origin: string;
@@ -19,15 +17,15 @@ export class Flight {
   @Column()
   landTime: Date;
 
-  @Column((type) => FlightSeats)
-  seats: FlightSeats;
+  @Column()
+  seats: boolean[];
 
-  constructor(id, origin, destiny, takeOffTime, landTime, seats) {
-    this.id = id;
-    this.origin = origin;
-    this.destiny = destiny;
-    this.takeOffTime = takeOffTime;
-    this.landTime = landTime;
-    this.seats = seats;
-  }
+  // constructor(id, origin, destiny, takeOffTime, landTime, seats) {
+  //   this.id = id;
+  //   this.origin = origin;
+  //   this.destiny = destiny;
+  //   this.takeOffTime = takeOffTime;
+  //   this.landTime = landTime;
+  //   this.seats = seats;
+  // }
 }
