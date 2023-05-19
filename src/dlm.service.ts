@@ -21,8 +21,8 @@ export class DLMService {
             new Redis({ host: "172.16.23.81" , port: 6379 }),
             new Redis({ host: "172.16.23.94" , port: 6379 }),
             new Redis({ host: "172.16.23.227", port: 6379 }),
-            new Redis({ host: "172.16.23.152", port: 6382 }),
-            new Redis({ host: "172.16.23.220", port: 6383 }),
+            new Redis({ host: "172.16.23.152", port: 6379 }),
+            new Redis({ host: "172.16.23.220", port: 6379 }),
         ], { driftFactor: 0.01, retryCount: 3, retryDelay: 200, retryJitter: 200, automaticExtensionThreshold: 500 });
             
     }
