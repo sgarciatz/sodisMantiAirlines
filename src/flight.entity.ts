@@ -1,6 +1,6 @@
 import { Entity, ObjectIdColumn, Column, ObjectId } from 'typeorm';
 
-@Entity({database: 'manti', name: 'Flights'})
+@Entity({database: 'manti', name: 'flights'})
 export class Flight {
   @ObjectIdColumn()
   _id: ObjectId;
