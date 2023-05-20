@@ -1,4 +1,4 @@
-import { ConsoleLogger, Controller, Get, Logger, Param } from '@nestjs/common';
+import { ConsoleLogger, Controller, Get, Logger, Param, Post, Query } from '@nestjs/common';
 import { ObjectId } from 'mongodb';
 import { FlightService } from './flight.service';
 import { Flight } from './flight.entity';
@@ -23,7 +23,12 @@ export class FlightController {
   }
 
   @Get(':id/book/:seat')
-  async bookFlightSeat(@Param('id') flight_id, @Param('seat') seatNumber): Promise<boolean> {    
-    return await this.dlmService.bookFlightSeat(new ObjectId(flight_id), seatNumber);
+  async holdFlightSeat(@Param('id') flight_id, @Param('seat') seatNumber, @Query('userid') userId): Promise<boolean> {    
+    return await this.dlmService.holdFlightSeat(new ObjectId(flight_id), seatNumber, userId);
+  }
+
+  @Post(':id/book/:seat')
+  async bookFlightSeat(@Param('id') flight_id, @Param('seat') seatNumber, @Query('userid') userId): Promise<boolean> {
+    return await this.dlmService.bookFlightSeat(new ObjectId(flight_id), seatNumber, userId);
   }
 }
