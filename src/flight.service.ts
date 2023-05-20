@@ -15,11 +15,24 @@ export class FlightService {
   }
 
   async getFlights(): Promise<Flight[]> {
-    return await this.flightRepository.find();
+    let flights = (await this.flightRepository.find()).map(flight => {
+      return {
+        _id: flight['_id'],
+        origin: flight['origin'],
+        destiny: flight['destiny'],
+        landTime: new Date(flight['landTime']['$date']['$numberLong'] * 1),
+        takeOffTime: new Date(flight['takeOffTime']['$date']['$numberLong'] * 1),
+        seats: flight['seats']
+      };
+    });
+    return flights;
   }
 
   async getFlight(flight_id: ObjectId): Promise<Flight> {
-    return await this.flightRepository.findOne({where: {_id: flight_id}});
+    let flight = await this.flightRepository.findOne({ where: { _id: flight_id } });
+    flight.landTime = new Date(flight['landTime']['$date']['$numberLong'] * 1);
+    flight.takeOffTime = new Date(flight['takeOffTime']['$date']['$numberLong'] * 1);
+    return flight;
   }
 
   async bookFlightSeat(flightId: ObjectId, seatNumber: number): Promise<boolean> {
